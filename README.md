@@ -1,6 +1,4 @@
-# AARS
-
-# CSE327 – Software Engineering
+## CSE327 – Software Engineering
 
 # Attendance and Academic Records System (AARS)
 
