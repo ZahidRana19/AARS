@@ -30,12 +30,13 @@ body {
 .container {
     width: 80%;
     max-width: 1200px;
-    min-height: 600px;
+    height: 90vh;
     display: flex;
     border-radius: var(--border-radius);
     overflow: hidden;
     box-shadow: var(--box-shadow);
     background-color: white;
+    overflow-y: auto;
 }
 
 .welcome-section {
@@ -137,13 +138,16 @@ body {
     background-color: white;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+    overflow-y: auto;
+    max-height: 100%;
 }
 
 .form-container {
     max-width: 400px;
     width: 100%;
     margin: 0 auto;
+    padding-bottom: 20px;
 }
 
 .form-nav {
@@ -180,10 +184,12 @@ body {
 
 .form {
     display: none;
+    min-height: min-content;
 }
 
 .form.active {
-    display: block;
+    display: flex;
+    flex-direction: column;
 }
 
 .form h2 {
@@ -191,6 +197,17 @@ body {
     margin-bottom: 25px;
     color: var(--dark);
     font-weight: 600;
+}
+
+.name-group {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.name-group .input-group {
+    flex: 1;
+    min-width: 120px;
 }
 
 .input-group {
@@ -325,10 +342,17 @@ body {
     .container {
         width: 95%;
         flex-direction: column;
+        height: auto;
+        min-height: 100vh;
     }
     
-    .welcome-section {
-        padding: 30px;
+    .welcome-section, .form-section {
+        flex: none;
+        width: 100%;
+    }
+
+    .form-section {
+        padding: 30px 20px;
     }
     
     .features {

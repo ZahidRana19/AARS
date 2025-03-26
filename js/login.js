@@ -56,10 +56,10 @@ document.addEventListener('DOMContentLoaded', function() { //tab switching
         loginForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const email = document.getElementById('login-email').value;
+            const identifier = document.getElementById('login-identifier').value;
             const password = document.getElementById('login-password').value;
             
-            if (validateLoginForm(email, password)) {
+            if (validateLoginForm(identifier, password)) {
                 // here you would  send the form data to the database
                 showNotification('Logging in...', 'success');
 
@@ -71,22 +71,67 @@ document.addEventListener('DOMContentLoaded', function() { //tab switching
     }
     
     if (signupForm) {
-        signupForm.addEventListener('submit', function(e) {
+        signupForm.addEventListener('submit', async function(e) {
             e.preventDefault();
+            const formData = new FormData(this);
+
+            if (!validateSignupForm(this)) {
+                return;
+            }
             
-            const name = document.getElementById('signup-name').value;
-            const id = document.getElementById('signup-id').value;
-            const email = document.getElementById('signup-email').value;
-            const password = document.getElementById('signup-password').value;
-            const terms = document.getElementById('terms').checked;
-            
-            if (validateSignupForm(name, id, email, password, terms)) {
-                showNotification('Creating your account...', 'success');
-  
-                setTimeout(() => {
-                    document.querySelector('[data-form="login"]').click();
-                    showNotification('Account created successfully! Please log in.', 'success');
-                }, 1500);
+            const submitBtn = this.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+    
+            try {
+                const response = await fetch('../php/signup.php', {
+                    method: 'POST',
+                    body: formData
+                });
+    
+                const result = await response.json();
+    
+                if (result.success) {
+                    showNotification('Creating your account...', 'info');
+                    if (result.redirect) {
+                        setTimeout(() => {
+                            showNotification(result.message, 'success');
+                            setTimeout(() => {
+                                window.location.href = result.redirect;
+                            }, 500);
+                        }, 1500);
+                    }
+                } else {
+                    if (result.isValidationError) {
+                        showNotification(result.message, 'error', 5000);
+                        
+                        if (result.duplicateFields) {
+                            document.querySelectorAll('.error-input').forEach(el => {
+                                el.classList.remove('error-input');
+                            });
+                            
+                            // Highlight errors
+                            result.duplicateFields.forEach(field => {
+                                const input = this.querySelector(`[name="${field}"]`);
+                                if (input) {
+                                    input.classList.add('error-input');
+                                    if (field === 'phone_number') {
+                                        input.value = input.value.replace(/^0+/, '');
+                                    }
+                                    if (result.duplicateFields[0] === field) {
+                                        input.focus();
+                                    }
+                                }
+                            });
+                        }
+                    } else {
+                        showNotification(result.message || 'Signup failed', 'error');
+                    }
+                }
+            } catch (error) {
+                showNotification('Network error. Please try again.', 'error');
+                console.error('Fetch error:', error);
+            } finally {
+                submitBtn.disabled = false;
             }
         });
     }
@@ -127,47 +172,62 @@ function checkPasswordStrength(password) {
     return 'weak';
 }
 
-function validateLoginForm(email, password) {
+function validateLoginForm(identifier, password) {
     let isValid = true;
+    let email;
+
+    const isEmail = identifier.includes('@');
     
-    if (!isValidEmail(email)) {
-        showNotification('Please enter a valid email address', 'error');
-        isValid = false;
-    }
-    
-    if (password.length < 6) {
-        showNotification('Password must be at least 6 characters', 'error');
-        isValid = false;
+    if (isEmail) {
+        email = identifier;
+
+        if (!isValidEmail(email)) {
+            showNotification('Please enter a valid email address', 'error');
+            isValid = false;
+        }
+    } else {
+        username = identifier;
     }
     
     return isValid;
 }
 
-function validateSignupForm(name, id, email, password, terms) {
+function validateSignupForm(form) {
     let isValid = true;
+    const values = Object.fromEntries(new FormData(form).entries());
     
-    if (name.length < 3) {
-        showNotification('Please enter your full name', 'error');
+    if (values.first_name.length < 2 || values.last_name < 2) {
+        showNotification('Name cannot be a single letter', 'error');
         isValid = false;
     }
     
-    if (id.length < 5) {
-        showNotification('Please enter a valid student ID', 'error');
+    if (values.username.length < 3) {
+        showNotification('Please enter a valid username', 'error');
+        isValid = false;
+    }
+
+    if (values.phone_number.length < 11 || values.phone_number.length > 11) {
+        showNotification('Please enter a valid phone number (11 digits)', 'error');
         isValid = false;
     }
     
-    if (!isValidEmail(email) || !email.endsWith('.edu')) {
+    if (!isValidEmail(values.email) || !values.email.endsWith('.edu')) {
         showNotification('Please enter a valid university email address (.edu)', 'error');
         isValid = false;
     }
     
-    if (checkPasswordStrength(password) === 'weak') {
+    if (checkPasswordStrength(values.password) === 'weak') {
         showNotification('Please choose a stronger password', 'error');
         isValid = false;
     }
-    
-    if (!terms) {
-        showNotification('You must agree to the Terms of Service', 'error');
+
+    if(values.password != values.confirm_password) {
+        showNotification('Password does not match!', 'error');
+        isValid = false;
+    }
+
+    if(!isValidRegCode(values.reg_code)) {
+        showNotification('Please enter a valid Registration Code', 'error');
         isValid = false;
     }
     
@@ -177,6 +237,16 @@ function validateSignupForm(name, id, email, password, terms) {
 function isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
+}
+
+function isValidRegCode(reg_code) {
+    // 7-character pattern: T...s with at least 2 numbers (Student)
+    const pattern7 = /^T(?=.*[0-9].*[0-9])[A-Za-z0-9]{5}s$/;
+    
+    // 9-character pattern: R...t with at least 2 numbers (Teacher)
+    const pattern9 = /^R(?=.*[0-9].*[0-9])[A-Za-z0-9]{7}t$/;
+    
+    return pattern7.test(reg_code) || pattern9.test(reg_code);
 }
 
 function showNotification(message, type = 'info') {
