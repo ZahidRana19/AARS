@@ -53,19 +53,42 @@ document.addEventListener('DOMContentLoaded', function() { //tab switching
     const signupForm = document.getElementById('signup-form');
     
     if (loginForm) {
-        loginForm.addEventListener('submit', function(e) {
+        loginForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            const identifier = document.getElementById('login-identifier').value;
-            const password = document.getElementById('login-password').value;
+            const formData = new FormData(this);
+            const submitBtn = this.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
             
-            if (validateLoginForm(identifier, password)) {
-                // here you would  send the form data to the database
-                showNotification('Logging in...', 'success');
-
-                setTimeout(() => {
-                    window.location.href = '#dashboard'; 
-                }, 1500);
+            try {
+                const response = await fetch('../php/login.php', {
+                    method: 'POST',
+                    body: formData
+                });
+    
+                const result = await response.json();
+    
+                if (result.success) {
+                    setTimeout(() => {
+                        showNotification(result.message, 'success');
+                        setTimeout(() => {
+                            window.location.href = result.redirect;
+                        }, 500);
+                    }, 1500);
+                } else {
+                    const errorMsg = result.message || 'Login failed';
+                    showNotification(errorMsg, 'error', 5000);
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showNotification(
+                    error.message.includes('Invalid response') 
+                        ? 'Server error. Please try again.' 
+                        : 'Network error. Please try again.', 
+                    'error'
+                );
+            } finally {
+                submitBtn.disabled = false;
             }
         });
     }
@@ -170,26 +193,6 @@ function checkPasswordStrength(password) {
     if (criteriaCount >= 2) return 'medium';
     
     return 'weak';
-}
-
-function validateLoginForm(identifier, password) {
-    let isValid = true;
-    let email;
-
-    const isEmail = identifier.includes('@');
-    
-    if (isEmail) {
-        email = identifier;
-
-        if (!isValidEmail(email)) {
-            showNotification('Please enter a valid email address', 'error');
-            isValid = false;
-        }
-    } else {
-        username = identifier;
-    }
-    
-    return isValid;
 }
 
 function validateSignupForm(form) {
@@ -298,3 +301,5 @@ function showNotification(message, type = 'info') {
         }, 300);
     }, 3000);
 }
+
+

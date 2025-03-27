@@ -1,8 +1,7 @@
 <?php
     header('Content-Type: application/json');
-    session_start();
     require_once 'database.php';
-    require_once 'User/userCreator.php';
+    require_once 'Signup/userCreator.php';
 
     $response = [
         'success' => false,
@@ -47,9 +46,6 @@
         }
         
         if ($user->save()) {
-            $_SESSION['RoleID'] = $user->getRole();
-            $_SESSION['Username'] = $userData['username'];
-
             echo json_encode([
                 'success' => true,
                 'message' => 'Account created successfully!',
