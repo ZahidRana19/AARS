@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Dashboard</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <header>
+        <nav class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">N</div>
+                <div class="logo-text">North South University</div>
+            </a>
+            <div class="nav-links">
+                <a href="#">Dashboard</a>
+                <a href="#">Manage Courses</a>
+                <a href="#">Students</a>
+                <a href="#">Grade Submission</a>
+                <a href="#">Profile</a>
+            </div>
+            <div class="auth-btns">
+                <a href="login.html" class="auth-btn logout-btn">Logout</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="dashboard-container">
+        <section class="welcome-section">
+            <h1>Welcome, Professor [Name]</h1>
+            <p>Faculty management portal</p>
+        </section>
+
+        <section class="stats-section">
+            <div class="stat-card">
+                <h3>Total Students</h3>
+                <p>loading..</p>
+            </div>
+            <div class="stat-card">
+                <h3>Courses Teaching</h3>
+                <p>loading..</p>
+            </div>
+            <div class="stat-card">
+                <h3>Average Attendance</h3>
+                <p>loading..</p>
+            </div>
+        </section>
+
+        <section class="courses-section">
+            <h2>Your Courses</h2>
+            
+        </section>
+
+        <section class="courses-section">
+            <h2>Quick Actions</h2>
+            <div class="course-grid">
+                <div class="course-card">
+                    <h3>Post Announcement</h3>
+                    <p>Create new class announcement</p>
+                    <button class="auth-btn" style="background: var(--success); margin-top: 1rem;">Create</button>
+                </div>
+                <div class="course-card">
+                    <h3>Grade Submission</h3>
+                    <p>Submit final grades</p>
+                    <button class="auth-btn" style="background: var(--primary); margin-top: 1rem;">Submit</button>
+                </div>
+                <div class="course-card">
+                    <h3>Attendance Report</h3>
+                    <p>Generate attendance report</p>
+                    <button class="auth-btn" style="background: var(--secondary); margin-top: 1rem;">Generate</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 North South University. All rights reserved.</p>
+    </footer>
+
+    <script src="js/dashboard.js"></script>
+</body>
+</html
