@@ -2,11 +2,64 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body>
-    <h1>Welcome to Dashboard</h1>
+    <header>
+        <nav class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">N</div>
+                <div class="logo-text">North South University</div>
+            </a>
+            <div class="nav-links">
+                <a href="#">Dashboard</a>
+                <a href="#">Courses</a>
+                <a href="#">Attendance</a>
+                <a href="#">Grades</a>
+                <a href="#">Profile</a>
+            </div>
+            <div class="auth-btns">
+                <a href="login.html" class="auth-btn logout-btn">Logout</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="dashboard-container">
+        <section class="welcome-section">
+            <h1>Welcome, [Student Name]</h1>
+            <p>Here's your academic overview</p>
+        </section>
+
+        <section class="stats-section">
+            <div class="stat-card">
+                <h3>Current GPA</h3>
+                <p>loading...</p>
+            </div>
+            <div class="stat-card">
+                <h3>Courses Enrolled</h3>
+                <p>null..</p>
+            </div>
+            <div class="stat-card">
+                <h3>Attendance</h3>
+                <p>loading...%</p>
+            </div>
+        </section>
+
+        <section class="courses-section">
+            <h2>Your Courses</h2>
+            <div class="course-grid">
+                
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 North South University. All rights reserved.</p>
+    </footer>
+
+    <script src="js/dashboard.js"></script>
+
 </body>
 </html>
