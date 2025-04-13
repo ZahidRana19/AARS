@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password - North South University</title>
+    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/resetpass.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="reset-container">
+            <div class="reset-header">
+                <img src="../images/nsu.png" alt="University Logo">
+                <h1>Reset Your Password</h1>
+                <p>Please create a new password for your account</p>
+            </div>
+            
+            <form id="reset-password-form">
+                <input type="hidden" id="token" name="token">
+                
+                <div class="password-requirements">
+                    <h4>Password Requirements:</h4>
+                    <ul id="requirements-list">
+                        <li id="req-length">At least 8 characters long</li>
+                        <li id="req-uppercase">Contains an uppercase letter</li>
+                        <li id="req-lowercase">Contains a lowercase letter</li>
+                        <li id="req-number">Contains a number</li>
+                        <li id="req-special">Contains a special character</li>
+                    </ul>
+                </div>
+                
+                <div class="input-group">
+                    <label for="new-password">New Password</label>
+                    <input type="password" id="new-password" name="new_password" required>
+                    <span class="toggle-password" onclick="togglePassword('new-password')">
+                        <i class="fas fa-eye"></i>
+                    </span>
+                </div>
+                
+                <div class="input-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" name="confirm_password" required>
+                    <span class="toggle-password" onclick="togglePassword('confirm-password')">
+                        <i class="fas fa-eye"></i>
+                    </span>
+                </div>
+                
+                <div class="password-strength">
+                    <div class="strength-meter">
+                        <div class="meter-segment"></div>
+                        <div class="meter-segment"></div>
+                        <div class="meter-segment"></div>
+                        <div class="meter-segment"></div>
+                    </div>
+                    <span class="strength-text">Password strength</span>
+                </div>
+                
+                <button type="submit" class="submit-btn">Reset Password</button>
+            </form>
+            
+            <div class="help-section">
+                <p>Need help? <a href="#">Contact IT Support</a></p>
+                <p><a href="../html/login.html">Back to Login</a></p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../js/resetpass.js"></script>
+</body>
+</html>
