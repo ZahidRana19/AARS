@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Portal - Student Profile</title>
+    <link rel="stylesheet" href="../css/profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="university-logo">
+                <h1>University Portal</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Profile</a></li>
+                    <li><a href="#">Courses</a></li>
+                    <li><a href="#">Grades</a></li>
+                    <li><a href="#">Schedule</a></li>
+                    <li><a href="#">Resources</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                <div class="notifications">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-count">3</span>
+                </div>
+                <div class="user-info">
+                    <img id="profilePicture" src="" alt="Profile Picture">
+                    <span id="userName">Loading...</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="profile-container">
+                <div class="profile-header">
+                    <div class="profile-picture">
+                        <img id="mainProfilePicture" src="" alt="Student Profile Picture">
+                        <div class="edit-profile-picture">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                    </div>
+                    <div class="profile-summary">
+                        <h2 id="studentName">Loading...</h2>
+                        <p id="studentId">ID: Loading...</p>
+                        <p id="studentProgram">Program: Loading...</p>
+                        <div class="status-badge" id="academicStatus">Loading...</div>
+                    </div>
+                    <div class="profile-actions">
+                        <button class="btn primary-btn"><i class="fas fa-edit"></i> Edit Profile</button>
+                        <button class="btn secondary-btn"><i class="fas fa-download"></i> Download Transcript</button>
+                    </div>
+                </div>
+
+                <div class="profile-content">
+                    <div class="profile-sidebar">
+                        <div class="card academic-summary">
+                            <h3>Academic Summary</h3>
+                            <div class="academic-item">
+                                <div class="academic-label">CGPA</div>
+                                <div class="academic-value" id="cgpa">Loading..</div>
+                            </div>
+                            <div class="academic-item">
+                                <div class="academic-label">Current Semester</div>
+                                <div class="academic-value" id="semester">Loading..</div>
+                            </div>
+                            <div class="academic-item">
+                                <div class="academic-label">Credits Completed</div>
+                                <div class="academic-value" id="creditsCompleted">Loading..</div>
+                            </div>
+                            <div class="academic-item">
+                                <div class="academic-label">Credits Remaining</div>
+                                <div class="academic-value" id="creditsRemaining">Loading..</div>
+                            </div>
+                            <div class="gpa-chart-container">
+                                <canvas id="gpaChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="card deadlines">
+                            <h3>Upcoming Deadlines</h3>
+                            <ul id="deadlinesList">
+                                <li class="loading-placeholder">Loading deadlines..</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="profile-main">
+                        <div class="card personal-info">
+                            <div class="card-header">
+                                <h3>Personal Information</h3>
+                                <button class="edit-btn"><i class="fas fa-pen"></i></button>
+                            </div>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <div class="info-label"><i class="fas fa-envelope"></i> Email</div>
+                                    <div class="info-value" id="email">Loading..</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label"><i class="fas fa-phone"></i> Phone</div>
+                                    <div class="info-value" id="phone">Loading..</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label"><i class="fas fa-home"></i> Address</div>
+                                    <div class="info-value" id="address">Loading..</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label"><i class="fas fa-birthday-cake"></i> Date of Birth</div>
+                                    <div class="info-value" id="dob">Loading..</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label"><i class="fas fa-id-card"></i> National ID</div>
+                                    <div class="info-value" id="nationalId">Loading..</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label"><i class="fas fa-globe"></i> Nationality</div>
+                                    <div class="info-value" id="nationality">Loading..</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card academic-records">
+                            <div class="card-header">
+                                <h3>Academic Records</h3>
+                                <div class="card-actions">
+                                    <select id="semesterSelect">
+                                        <option value="all">All Semesters</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <table class="records-table">
+                                <thead>
+                                    <tr>
+                                        <th>Course Code</th>
+                                        <th>Course Name</th>
+                                        <th>Credits</th>
+                                        <th>Grade</th>
+                                        <th>Semester</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="courseRecords">
+                                    <tr class="loading-placeholder">
+                                        <td colspan="5">Loading course records...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="card advisor-info">
+                            <h3>Academic Advisor</h3>
+                            <div class="advisor-details">
+                                <div class="advisor-picture">
+                                    <img id="advisorPicture" src="" alt="Advisor Picture">
+                                </div>
+                                <div class="advisor-content">
+                                    <h4 id="advisorName">Loading...</h4>
+                                    <p id="advisorDepartment">Loading...</p>
+                                    <p id="advisorEmail">Loading...</p>
+                                    <p id="advisorOffice">Loading...</p>
+                                    <button class="btn primary-btn small-btn">Schedule Meeting</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>University Portal</h4>
+                    <p>&copy; North South University. All rights reserved.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Basundhara city, Dhaka, Bangladesh</p>
+                    <p>Email: nsu@university.edu</p>
+                    <p>Phone: 01840192460</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="../js/profile1.js"></script>
+</body>
+</html>
