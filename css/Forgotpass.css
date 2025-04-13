@@ -1,0 +1,204 @@
+:root {
+    --primary-color: #4E6BFF;
+    --primary-dark: #3D53CC;
+    --text-color: #333;
+    --text-light: #777;
+    --background: #f9fafb;
+    --error: #e74c3c;
+    --success: #2ecc71;
+    --box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 420px;
+}
+
+.form-container {
+    background: white;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: var(--box-shadow);
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+.form-header {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.form-header h1 {
+    font-weight: 700;
+    font-size: 24px;
+    margin-bottom: 12px;
+    color: var(--text-color);
+}
+
+.form-header p {
+    color: var(--text-light);
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.input-group {
+    margin-bottom: 24px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #e1e5e9;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: var(--transition);
+}
+
+.input-group input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(78, 107, 255, 0.15);
+    outline: none;
+}
+
+.input-group input::placeholder {
+    color: #b0b0b0;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.submit-btn:hover {
+    background-color: var(--primary-dark);
+}
+
+.btn-text {
+    transition: var(--transition);
+}
+
+.btn-loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 0.8s infinite linear;
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.submit-btn.loading .btn-loader {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.submit-btn.loading .btn-text {
+    opacity: 0;
+}
+
+.result-message {
+    margin-top: 24px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    display: none;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.result-message.error {
+    display: block;
+    background-color: rgba(231, 76, 60, 0.1);
+    color: var(--error);
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.result-message.success {
+    display: block;
+    background-color: rgba(46, 204, 113, 0.1);
+    color: var(--success);
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.form-footer {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.back-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+@media (max-width: 480px) {
+    .form-container {
+        padding: 30px 20px;
+    }
+}
