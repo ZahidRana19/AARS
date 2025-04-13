@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgot Password</title>
+    <link rel="stylesheet" href="../css/Forgotpass.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <div class="form-header">
+                <h1>Forgot Password?</h1>
+                <p>Don't worry, just enter your email and we'll send you a reset link.</p>
+            </div>
+            
+            <form id="forgotPasswordForm" class="form active" action="../php/sendPassword.php" method="POST">
+                <div class="input-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="your@email.com" required>
+                </div>
+                
+                <button type="submit" class="submit-btn">
+                    <span class="btn-text">Send Reset Link</span>
+                    <span class="btn-loader"></span>
+                </button>
+            </form>
+            
+            <div class="result-message" id="resultMessage"></div>
+            
+            <div class="form-footer">
+                <a href="../html/login.html" class="back-link">Back to Login</a>
+            </div>
+        </div>
+    </div>
+    
+   <!-- <script src="../js/forgotpass.js"></script> -->
+</body>
+</html>
