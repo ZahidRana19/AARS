@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="#" class="logo">
+                    <div class="logo-icon">A</div>
+                    <div class="logo-text">Admin Panel</div>
+                </a>
+                <a href="#" class="sidebar-link">Dashboard</a>
+                <a href="login.html" class="sidebar-link logout-btn">Logout</a>
+            </nav>
+        </aside>
+
+        <main class="admin-main">
+            <section class="welcome-section">
+                <h1>Admin Dashboard</h1>
+                <p>Manage user accounts and permissions</p>
+            </section>
+
+            <div class="approval-card">
+                <h2>Pending Sign-up Requests (<span class="pending-count">0</span>)</h2>
+                <ul class="pending-list">
+                    <!-- Dynamic content will be inserted here -->
+                </ul>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/admin.js"></script>
+</body>
+</html>
