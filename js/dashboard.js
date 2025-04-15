@@ -74,14 +74,25 @@ function updateStudentDashboard(data) {
 
     const coursesSection = document.querySelector('.courses-section');
     const emptyState = coursesSection.querySelector('.empty-state');
-    const courseGrid = document.createElement('div');
-    courseGrid.className = 'course-grid';
+    const courseGrid = coursesSection.querySelector('.course-grid') || document.createElement('div');
+    
+    if (!coursesSection.contains(courseGrid)) {
+        courseGrid.className = 'course-grid';
+        coursesSection.appendChild(courseGrid);
+    }
+    
+    courseGrid.innerHTML = '';
     
     if (data.courses?.length > 0) {
         emptyState.style.display = 'none';
+        courseGrid.style.display = 'grid';
         
-        courseGrid.innerHTML = data.courses.map(course => `
-            <div class="course-card">
+        const displayedCourses = data.courses.slice(0, 3);
+        
+        displayedCourses.forEach(course => {
+            const courseCard = document.createElement('div');
+            courseCard.className = 'course-card';
+            courseCard.innerHTML = `
                 <div class="course-header">
                     <h3>${course.CourseCode}</h3>
                     <span class="course-badge">Enrolled</span>
@@ -91,10 +102,12 @@ function updateStudentDashboard(data) {
                     <span><i class="fas fa-layer-group"></i> Section ${course.SectionNo}</span>
                     <span><i class="fas fa-credit-card"></i> ${course.Credits} Credits</span>
                 </div>
-            </div>
-        `).join('');
+            `;
+            courseGrid.appendChild(courseCard);
+        });
     } else {
         emptyState.style.display = 'block';
+        courseGrid.style.display = 'none';
     }
 }
 
@@ -139,7 +152,12 @@ function updateTeacherDashboard(data) {
     
     const coursesSection = document.querySelector('.courses-section');
     const emptyState = coursesSection.querySelector('.empty-state');
-    const courseGrid = coursesSection.querySelector('.course-grid');
+    const courseGrid = coursesSection.querySelector('.course-grid') || document.createElement('div');
+    
+    if (!coursesSection.contains(courseGrid)) {
+        courseGrid.className = 'course-grid';
+        coursesSection.appendChild(courseGrid);
+    }
     
     courseGrid.innerHTML = '';
     
@@ -147,7 +165,9 @@ function updateTeacherDashboard(data) {
         emptyState.style.display = 'none';
         courseGrid.style.display = 'grid';
         
-        data.courses.forEach(course => {
+        const displayedCourses = data.courses.slice(0, 3);
+        
+        displayedCourses.forEach(course => {
             const courseCard = document.createElement('div');
             courseCard.className = 'course-card';
             courseCard.innerHTML = `
