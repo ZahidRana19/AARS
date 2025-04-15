@@ -115,7 +115,7 @@
                     $personID = $personArr['PersonID'];
                 }
         
-                // Insert into student table
+                // Insert into teacher table
                 $insertQuery_student = $this->db->prepare("
                     INSERT INTO teacher 
                     (P_ID)

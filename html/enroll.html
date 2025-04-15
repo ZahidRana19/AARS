@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enroll</title>
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/enroll.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div id="navbar-container"></div>
+
+    <div class="transition-container"></div>
+    <div class="main-container">
+        <section id="available-courses">
+            <h2>Available Courses</h2>
+            <div class="search-sort-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="search" placeholder="Search courses...">
+                </div>
+                <select id="sorting">
+                    <option value="" disabled selected>Sort by</option>
+                    <option value="code-asc">Course Code (A-Z)</option>
+                    <option value="code-desc">Course Code (Z-A)</option>
+                    <option value="name-asc">Course Name (A-Z)</option>
+                    <option value="name-desc">Course Name (Z-A)</option>
+                </select>
+            </div>
+
+            <div class="course-list" id="courseList">
+                <div class="course-item">
+                    <button type="button" class="collapsible">
+                        <span class="course-code">CSE101</span>
+                        <span class="course-name">Introduction to Computer Science</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="course-content">
+                        <div class="section-item">
+                            <div class="section-info">
+                                <span class="section-code">CSE115.1</span>
+                                <span class="section-time">MW 10:00-11:30</span>
+                                <span class="section-seats">25/30</span>
+                            </div>
+                            <button type="button" class="add-btn">Add</button>
+                        </div>
+                        <div class="section-item">
+                            <div class="section-info">
+                                <span class="section-code">CSE115.2</span>
+                                <span class="section-time">RA 14:00-15:30</span>
+                                <span class="section-seats">20/30</span>
+                            </div>
+                            <button type="button" class="add-btn">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="selected-courses">
+            <h2>Selected Courses</h2>
+            <div class="selected-courses-list">
+                <div class="selected-item">
+                    <div class="section-info">
+                        <span class="section-code">CSE115.1</span>
+                        <span class="section-time">MW 10:00-11:30</span>
+                        <span class="section-seats">25/30</span>
+                    </div>
+                    <button type="button" class="remove-btn">Remove</button>
+                </div>
+            </div>
+            <button type="button" id="confirmBtn" class="confirm-btn">Confirm Enrollment</button>
+        </section>
+    </div>
+
+    <script src="../js/navbar.js"></script>
+    <script src="../js/enroll.js"></script>
+</body>
+
+</html>

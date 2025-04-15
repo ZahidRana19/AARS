@@ -4,72 +4,92 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Faculty Dashboard</title>
+    <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <header>
-        <nav class="nav-container">
-            <a href="#" class="logo">
-                <div class="logo-icon">N</div>
-                <div class="logo-text">North South University</div>
-            </a>
-            <div class="nav-links">
-                <a href="dashboard.html">Dashboard</a>
-                <a href="#">Manage Courses</a>
-                <a href="#">Students</a>
-                <a href="#">Grade Submission</a>
-                <a href="#">Profile</a>
-            </div>
-            <div class="auth-btns">
-                <a href="login.html" class="auth-btn logout-btn">Logout</a>
-            </div>
-        </nav>
-    </header>
+    <div id="navbar-container"></div>
 
     <main class="dashboard-container">
         <section class="welcome-section">
-            <h1>Welcome, Professor [Name]</h1>
-            <p>Faculty management portal</p>
+            <h1>Welcome, <span class="user-name">Professor [Name]</span></h1>
+            <p class="subtitle">Faculty management portal</p>
         </section>
 
         <section class="stats-section">
             <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-users"></i></div>
                 <h3>Total Students</h3>
-                <p>loading..</p>
+                <p class="stat-value">Not Available</p>
+                <p class="stat-help">Will update when courses are assigned</p>
             </div>
             <div class="stat-card">
-                <h3>Courses Teaching</h3>
-                <p>loading..</p>
+                <div class="stat-icon"><i class="fas fa-book-open"></i></div>
+                <h3>Assigned Courses</h3>
+                <p class="stat-value">0</p>
+                <p class="stat-help">No courses assigned yet</p>
             </div>
             <div class="stat-card">
-                <h3>Average Attendance</h3>
-                <p>loading..</p>
+                <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                <h3>Pending Requests</h3>
+                <p class="stat-value">Not Available</p>
+                <p class="stat-help">Submit requests to see status</p>
             </div>
         </section>
 
         <section class="courses-section">
-            <h2>Your Courses</h2>
+            <div class="section-header">
+                <h2>Your Assigned Courses</h2>
+                <a href="request-course.html" class="view-all">Request New</a>
+            </div>
             
+            <!-- When no courses are assigned -->
+            <div class="empty-state">
+                <i class="fas fa-chalkboard-teacher fa-3x"></i>
+                <h3>No Courses Assigned</h3>
+                <p>You haven't been assigned any courses for this semester yet. Request courses or wait for admin approval.</p>
+                <a href="request-course.html" class="btn btn-primary">Request Courses</a>
+            </div>
+            
+            <!-- When courses are assigned (hidden by default) -->
+            <div class="course-grid" style="display: none;">
+                <div class="course-card">
+                    <div class="course-header">
+                        <h3>CSE 115</h3>
+                        <span class="course-badge">Active</span>
+                    </div>
+                    <p class="course-title">Programming Language I</p>
+                    <div class="course-meta">
+                        <span><i class="fas fa-users"></i> 42 Students</span>
+                        <span><i class="fas fa-clock"></i> Mon/Wed 10:00 AM</span>
+                    </div>
+                    <div class="course-actions">
+                        <a href="#" class="btn btn-sm btn-primary"><i class="fas fa-list"></i> Roster</a>
+                        <a href="#" class="btn btn-sm btn-secondary"><i class="fas fa-chart-bar"></i> Analytics</a>
+                    </div>
+                </div>
+            </div>
         </section>
 
-        <section class="courses-section">
+        <section class="quick-actions">
             <h2>Quick Actions</h2>
-            <div class="course-grid">
-                <div class="course-card">
+            <div class="action-grid">
+                <a href="create-announcement.html" class="action-card">
+                    <i class="fas fa-bullhorn"></i>
                     <h3>Post Announcement</h3>
                     <p>Create new class announcement</p>
-                    <button class="auth-btn" style="background: var(--success); margin-top: 1rem;">Create</button>
-                </div>
-                <div class="course-card">
-                    <h3>Grade Submission</h3>
+                </a>
+                <a href="grade-submission.html" class="action-card">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Submit Grades</h3>
                     <p>Submit final grades</p>
-                    <button class="auth-btn" style="background: var(--primary); margin-top: 1rem;">Submit</button>
-                </div>
-                <div class="course-card">
-                    <h3>Attendance Report</h3>
-                    <p>Generate attendance report</p>
-                    <button class="auth-btn" style="background: var(--secondary); margin-top: 1rem;">Generate</button>
-                </div>
+                </a>
+                <a href="request-course.html" class="action-card">
+                    <i class="fas fa-hand-paper"></i>
+                    <h3>Request Course</h3>
+                    <p>Request teaching assignment</p>
+                </a>
             </div>
         </section>
     </main>
@@ -78,6 +98,7 @@
         <p>&copy; 2025 North South University. All rights reserved.</p>
     </footer>
 
+    <script src="../js/navbar.js"></script>
     <script src="../js/dashboard.js"></script>
 </body>
-</html
+</html>

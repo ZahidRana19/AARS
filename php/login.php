@@ -34,11 +34,18 @@ try {
             $_SESSION['username'] = $result['user']['Username'];
             $_SESSION['email'] = $result['user']['Email'];
             $_SESSION['role'] = $result['user']['RoleName'];
-
+        
             $response = [
                 'success' => true,
                 'message' => $result['message'],
-                'redirect' => '../html/dashboard.html'
+                'redirect' => ($result['user']['RoleName'] === "Student") 
+                    ? '../html/dashboard.html' 
+                    : '../html/teacher-dashboard.html',
+                'userData' => [
+                    'id' => $result['user']['PersonID'],
+                    'name' => $result['user']['Username'],
+                    'role' => $result['user']['RoleName']
+                ]
             ];
         } else {
             $response = [

@@ -1,4 +1,5 @@
-document.addEventListener('DOMContentLoaded', function() { //tab switching 
+document.addEventListener('DOMContentLoaded', function() {
+    // Tab switching logic
     const tabButtons = document.querySelectorAll('.tab-btn');
     const forms = document.querySelectorAll('.form');
     
@@ -13,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() { //tab switching
         });
     });
 
+    // Password strength meter
     const passwordInput = document.getElementById('signup-password');
     const meterSegments = document.querySelectorAll('.meter-segment');
     const strengthText = document.querySelector('.strength-text');
@@ -49,6 +51,7 @@ document.addEventListener('DOMContentLoaded', function() { //tab switching
         });
     }
 
+    // Login form handling
     const loginForm = document.getElementById('login-form');
     const signupForm = document.getElementById('signup-form');
     
@@ -69,15 +72,39 @@ document.addEventListener('DOMContentLoaded', function() { //tab switching
                 const result = await response.json();
     
                 if (result.success) {
+                    
+                    if (result.userData) {
+                        localStorage.setItem('userId', result.userData.id);
+                        localStorage.setItem('userName', result.userData.name);
+                        localStorage.setItem('userRole', result.userData.role);
+                    }
+                    
+                    showNotification(result.message, 'success');
+                    
+                    // Redirect after short delay
                     setTimeout(() => {
-                        showNotification(result.message, 'success');
-                        setTimeout(() => {
-                            window.location.href = result.redirect;
-                        }, 500);
-                    }, 1500);
+                        window.location.href = result.redirect;
+                    }, 1000);
                 } else {
                     const errorMsg = result.message || 'Login failed';
                     showNotification(errorMsg, 'error', 5000);
+                    
+                    // Highlight error fields if provided
+                    if (result.invalidFields) {
+                        document.querySelectorAll('.error-input').forEach(el => {
+                            el.classList.remove('error-input');
+                        });
+                        
+                        result.invalidFields.forEach(field => {
+                            const input = this.querySelector(`[name="${field}"]`);
+                            if (input) {
+                                input.classList.add('error-input');
+                                if (result.invalidFields[0] === field) {
+                                    input.focus();
+                                }
+                            }
+                        });
+                    }
                 }
             } catch (error) {
                 console.error('Login error:', error);
@@ -93,6 +120,7 @@ document.addEventListener('DOMContentLoaded', function() { //tab switching
         });
     }
     
+    // Signup form handling (unchanged)
     if (signupForm) {
         signupForm.addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -132,7 +160,6 @@ document.addEventListener('DOMContentLoaded', function() { //tab switching
                                 el.classList.remove('error-input');
                             });
                             
-                            // Highlight errors
                             result.duplicateFields.forEach(field => {
                                 const input = this.querySelector(`[name="${field}"]`);
                                 if (input) {
@@ -160,6 +187,7 @@ document.addEventListener('DOMContentLoaded', function() { //tab switching
     }
 });
 
+// Utility functions (unchanged)
 function togglePassword(inputId) {
     const passwordInput = document.getElementById(inputId);
     const icon = passwordInput.nextElementSibling.querySelector('i');
@@ -243,24 +271,20 @@ function isValidEmail(email) {
 }
 
 function isValidRegCode(reg_code) {
-    // 7-character pattern: T...s with at least 2 numbers (Student)
     const pattern7 = /^T(?=.*[0-9].*[0-9])[A-Za-z0-9]{5}s$/;
-    
-    // 9-character pattern: R...t with at least 2 numbers (Teacher)
     const pattern9 = /^R(?=.*[0-9].*[0-9])[A-Za-z0-9]{7}t$/;
-    
     return pattern7.test(reg_code) || pattern9.test(reg_code);
 }
 
-function showNotification(message, type = 'info') {
+function showNotification(message, type = 'info', duration = 3000) {
     let notification = document.querySelector('.notification');
     
     if (!notification) {
-
         notification = document.createElement('div');
         notification.className = 'notification';
         document.body.appendChild(notification);
 
+        // Basic notification styling
         notification.style.position = 'fixed';
         notification.style.bottom = '20px';
         notification.style.right = '20px';
@@ -273,6 +297,7 @@ function showNotification(message, type = 'info') {
         notification.style.opacity = '0';
     }
 
+    // Type-based styling
     if (type === 'success') {
         notification.style.backgroundColor = '#28a745';
         notification.style.color = 'white';
@@ -299,7 +324,5 @@ function showNotification(message, type = 'info') {
                 notification.parentNode.removeChild(notification);
             }
         }, 300);
-    }, 3000);
+    }, duration);
 }
-
-

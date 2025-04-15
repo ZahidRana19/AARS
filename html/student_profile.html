@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Portal - Student Profile</title>
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="navbar-container"></div>
+    
+    <div class="container">
+        <main>
+            <div class="profile-container">
+                <div class="profile-header">
+                    <div class="profile-picture">
+                        <img id="mainProfilePicture" src="../images/student.png" alt="Student Profile Picture">
+                    </div>
+                    <div class="profile-summary">
+                        <h2 id="studentName">N/A</h2>
+                        <p id="studentId">ID: N/A</p>
+                        <p id="studentMajor">Major: N/A</p>
+                        <p id="studentDept">Department: N/A</p>
+                    </div>
+                    <div class="profile-actions">
+                        <button class="btn secondary-btn"><i class="fas fa-download"></i> Download Transcript</button>
+                    </div>
+                </div>
+
+                <div class="profile-content">
+                    <div class="profile-sidebar">
+                        <div class="card academic-summary">
+                            <h3>Academic Summary</h3>
+                            <div class="academic-item">
+                                <div class="academic-label">CGPA</div>
+                                <div class="academic-value" id="cgpa">N/A</div>
+                            </div>
+                            <div class="academic-item">
+                                <div class="academic-label">Current Semester</div>
+                                <div class="academic-value" id="semester">Spring</div>
+                            </div>
+                            <div class="academic-item">
+                                <div class="academic-label">Credits Completed</div>
+                                <div class="academic-value" id="creditsCompleted">60</div>
+                            </div>
+                            <div class="academic-item">
+                                <div class="academic-label">Credits Remaining</div>
+                                <div class="academic-value" id="creditsRemaining">70</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-main">
+                        <div class="card user-info">
+                            <div class="card-header">
+                                <h3>User Information</h3>
+                                <button class="edit-btn"><i class="fas fa-pen"></i></button>
+                            </div>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <div class="info-label">First Name</div>
+                                    <input type="text" class="info-value" id="firstName" value="N/A" readonly>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Middle Name</div>
+                                    <input type="text" class="info-value" id="middleName" value="N/A" readonly>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Last Name</div>
+                                    <input type="text" class="info-value" id="lastName" value="N/A" readonly>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label"><i class="fas fa-envelope"></i> Email</div>
+                                    <input type="text" class="info-value" id="email" value="N/A" readonly>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label"><i class="fas fa-phone"></i> Phone Number</div>
+                                    <input type="text" class="info-value" id="phone" value="N/A" readonly>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">House Number</div>
+                                    <input type="text" class="info-value" id="houseNumber" value="N/A" readonly>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Street Number</div>
+                                    <input type="text" class="info-value" id="streetNumber" value="N/A" readonly>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Street Name</div>
+                                    <input type="text" class="info-value" id="streetName" value="N/A" readonly>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">City</div>
+                                    <input type="text" class="info-value" id="city" value="N/A" readonly>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Postal Code</div>
+                                    <input type="text" class="info-value" id="postalCode" value="N/A" readonly>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Department</div>
+                                    <div class="info-value" id="departmentDisplay">N/A</div>
+                                    <div id="departmentDropdown" class="dropdown-container" style="display: none;"></div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Major</div>
+                                    <div class="info-value" id="majorDisplay">N/A</div>
+                                    <div id="majorDropdown" class="dropdown-container" style="display: none;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>University Portal</h4>
+                    <p>&copy; North South University. All rights reserved.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Basundhara city, Dhaka, Bangladesh</p>
+                    <p>Email: nsu@university.edu</p>
+                    <p>Phone: 01840192460</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="../js/navbar.js"></script>
+    <script src="../js/student_profile.js"></script>
+</body>
+</html>
