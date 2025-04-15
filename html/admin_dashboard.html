@@ -4,37 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/dashboard.css">
     <link rel="stylesheet" href="../css/admin.css">
 </head>
 <body>
-    <div class="admin-container">
-        <aside class="sidebar">
-            <nav class="sidebar-nav">
-                <a href="#" class="logo">
-                    <div class="logo-icon">A</div>
-                    <div class="logo-text">Admin Panel</div>
-                </a>
-                <a href="#" class="sidebar-link">Dashboard</a>
-                <a href="login.html" class="sidebar-link logout-btn">Logout</a>
-            </nav>
-        </aside>
+    <div id="navbar-container"></div>
 
+    <div class="admin-container">
         <main class="admin-main">
             <section class="welcome-section">
-                <h1>Admin Dashboard</h1>
-                <p>Manage user accounts and permissions</p>
+                <h1>Course Approval Dashboard</h1>
+                <p>Review and approve course requests from faculty members</p>
             </section>
 
             <div class="approval-card">
-                <h2>Pending Sign-up Requests (<span class="pending-count">0</span>)</h2>
-                <ul class="pending-list">
-                    <!-- Dynamic content will be inserted here -->
-                </ul>
+                <div class="card-header">
+                    <h2>Pending Course Requests (<span class="pending-count">0</span>)</h2>
+                    <div class="filter-controls">
+                        <select id="department-filter">
+                            <option value="all">All Departments</option>
+                            <option value="cse">Computer Science</option>
+                            <option value="eee">Electrical Engineering</option>
+                            <option value="bba">Business Administration</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="requests-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Faculty</th>
+                                <th>Course Code</th>
+                                <th>Course Title</th>
+                                <th>Department</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="pending-list">
+                            
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </main>
     </div>
 
+    <script src="../js/navbar.js"></script>
     <script src="../js/admin.js"></script>
 </body>
 </html>

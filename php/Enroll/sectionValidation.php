@@ -3,28 +3,42 @@ require_once '../database.php';
 
 class SectionValidation {
     private $db;
-    private $studentId;
+    private $userId;
+    private $roleName;
 
-    public function __construct($db, $studentId) {
+    public function __construct($db, $userId) {
         $this->db = $db;
-        $this->studentId = $studentId;
+        $this->userId = $userId;
+        $this->roleName = $_SESSION['role'];
     }
 
     public function validateSection($courseId, $sectionNo) {
         $errors = [];
-        
-        if (!$this->sectionExists($courseId, $sectionNo)) {
-            $errors[] = 'Section not found';
-        } elseif ($this->isSectionFull($courseId, $sectionNo)) {
-            $errors[] = 'No seats available';
-        } elseif ($this->isAlreadyEnrolled($courseId)) {
-            $errors[] = 'Already enrolled in this course';
-        } elseif (!$this->checkPrerequisites($courseId)) {
-            $errors[] = 'Prerequisite not satisfied';
-        } elseif ($this->hasTimeConflict($courseId, $sectionNo)) {
-            $errors[] = 'Time conflict with existing schedule';
-        } elseif ($this->hasMaxCourseLimit()) {
-            $errors[] = 'Maximum 5 courses allowed';
+
+        if($this->roleName === 'Student') {
+            if (!$this->sectionExists($courseId, $sectionNo)) {
+                $errors[] = 'Section not found';
+            } elseif ($this->isSectionFull($courseId, $sectionNo)) {
+                $errors[] = 'No seats available';
+            } elseif ($this->isAlreadyEnrolled($courseId)) {
+                $errors[] = 'Already enrolled in this course';
+            } elseif (!$this->checkPrerequisites($courseId)) {
+                $errors[] = 'Prerequisite not satisfied';
+            } elseif ($this->hasTimeConflict($courseId, $sectionNo)) {
+                $errors[] = 'Time conflict with existing schedule';
+            } elseif ($this->hasMaxCourseLimit()) {
+                $errors[] = 'Maximum 5 courses allowed';
+            }
+        } else if($this->roleName === 'Teacher') {
+            if (!$this->sectionExists($courseId, $sectionNo)) {
+                $errors[] = 'Section not found';
+            } elseif ($this->isAlreadyRequested($courseId, $sectionNo)) {
+                $errors[] = 'Already requested for this section';
+            } elseif ($this->hasTimeConflict($courseId, $sectionNo)) {
+                $errors[] = 'Time conflict with existing schedule';
+            } elseif ($this->hasMaxRequestLimit()) {
+                $errors[] = 'Maximum 5 courses allowed';
+            }
         }
 
         return empty($errors) 
@@ -52,7 +66,16 @@ class SectionValidation {
             "SELECT COUNT(*) FROM selectedsections 
              WHERE S_ID = ? AND CourseID = ?"
         );
-        $stmt->execute([$this->studentId, $courseId]);
+        $stmt->execute([$this->userId, $courseId]);
+        return $stmt->fetchColumn() > 0;
+    }
+
+    private function isAlreadyRequested($courseId, $sectionNo) {
+        $stmt = $this->db->prepare(
+            "SELECT COUNT(*) FROM requested_sections 
+             WHERE T_ID = ? AND CourseID = ? AND SectionNo = ?"
+        );
+        $stmt->execute([$this->userId, $courseId, $sectionNo]);
         return $stmt->fetchColumn() > 0;
     }
 
@@ -67,7 +90,7 @@ class SectionValidation {
             "SELECT COUNT(*) FROM prev_taken_courses 
              WHERE S_ID = ? AND CourseCode = ?"
         );
-        $stmt->execute([$this->studentId, $prerequisite]);
+        $stmt->execute([$this->userId, $prerequisite]);
         return $stmt->fetchColumn() > 0;
     }
 
@@ -75,7 +98,11 @@ class SectionValidation {
         $newSection = $this->getSectionInfo($courseId, $sectionNo);
         if (!$newSection) return false;
 
-        $sections = $this->getCurrentSections();
+        if($this->roleName === 'Student') {
+            $sections = $this->getCurrentSections();
+        } else if($this->roleName === 'Teacher') {
+            $sections = $this->getCurrentRequestedSections();
+        }
         foreach ($sections as $section) {
             if ($this->schedulesConflict($newSection, $section)) {
                 return true;
@@ -96,7 +123,17 @@ class SectionValidation {
              JOIN section s ON ss.CourseID = s.CourseID AND ss.SectionNo = s.SectionNo
              WHERE ss.S_ID = ?"
         );
-        $stmt->execute([$this->studentId]);
+        $stmt->execute([$this->userId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    private function getCurrentRequestedSections() {
+        $stmt = $this->db->prepare(
+            "SELECT s.* FROM requested_sections rs
+             JOIN section s ON rs.CourseID = s.CourseID AND rs.SectionNo = s.SectionNo
+             WHERE rs.T_ID = ?"
+        );
+        $stmt->execute([$this->userId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -107,7 +144,13 @@ class SectionValidation {
 
     private function hasMaxCourseLimit() {
         $stmt = $this->db->prepare("SELECT COUNT(*) FROM selectedsections WHERE S_ID = ?");
-        $stmt->execute([$this->studentId]);
+        $stmt->execute([$this->userId]);
+        return $stmt->fetchColumn() >= 5;
+    }
+
+    private function hasMaxRequestLimit() {
+        $stmt = $this->db->prepare("SELECT COUNT(*) FROM requested_sections WHERE T_ID = ?");
+        $stmt->execute([$this->userId]);
         return $stmt->fetchColumn() >= 5;
     }
 }

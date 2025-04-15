@@ -9,6 +9,9 @@
     --dark: #333;
     --dark-light: #555;
     --success: #28a745;
+    --success-dark: #115e23;
+    --danger: #b52619;
+    --danger-dark: #69120a;
     --gray: #6c757d;
     --gray-light: #e9ecef;
     --border-radius: 8px;
@@ -126,6 +129,7 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.5rem;
+    margin-top: 20px;
 }
 
 .course-card {
@@ -358,7 +362,6 @@ footer p {
     color: #721c24;
 }
 
-/* Responsive adjustments for teacher dashboard */
 @media (max-width: 768px) {
     .course-actions {
         flex-direction: column;
@@ -369,7 +372,6 @@ footer p {
     }
 }
 
-/* Responsive adjustments */
 @media (max-width: 992px) {
     .nav-container {
         flex-direction: column;

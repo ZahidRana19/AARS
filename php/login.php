@@ -38,9 +38,12 @@ try {
             $response = [
                 'success' => true,
                 'message' => $result['message'],
-                'redirect' => ($result['user']['RoleName'] === "Student") 
-                    ? '../html/dashboard.html' 
-                    : '../html/teacher_dashboard.html',
+                'redirect' => match($result['user']['RoleName']) {
+                    'Student' => '../html/dashboard.html',
+                    'Teacher' => '../html/teacher_dashboard.html',
+                    'Admin' => '../html/admin_dashboard.html',
+                    default => '../html/login.html'
+                },
                 'userData' => [
                     'id' => $result['user']['PersonID'],
                     'name' => $result['user']['Username'],

@@ -9,11 +9,11 @@ class EnrollmentFacade {
     private $validation;
     private $enrollment;
 
-    public function __construct($studentId) {
+    public function __construct($userId) {
         $db = Database::getInstance()->getConnection();
-        $this->eligibility = new CourseEligibility($db, $studentId);
-        $this->validation = new SectionValidation($db, $studentId);
-        $this->enrollment = new Enrollment($db, $studentId);
+        $this->eligibility = new CourseEligibility($db, $userId);
+        $this->validation = new SectionValidation($db, $userId);
+        $this->enrollment = new Enrollment($db, $userId);
     }
 
     public function getAvailableCourses() {
@@ -33,6 +33,10 @@ class EnrollmentFacade {
 
     public function confirmEnrollment() {
         return $this->enrollment->confirmEnrollment();
+    }
+
+    public function sendRequest($personId) {
+        return $this->enrollment->sendRequest($personId);
     }
 }
 ?>

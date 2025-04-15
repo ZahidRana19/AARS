@@ -126,35 +126,50 @@ function updateTeacherDashboard(data) {
     });
     
     const totalStudents = data.courses.reduce((sum, course) => sum + (course.StudentCount || 0), 0);
-    
-    const stats = [
-        totalStudents || 'Not Available',
-        data.assignedCourses || '0',
-        data.pendingRequests || '0'
-    ];
+    const assignedCourses = data.courses?.length || 0;
     
     document.querySelectorAll('.stat-value').forEach((el, i) => {
+        const stats = [
+            totalStudents || 'Not Available',
+            assignedCourses || '0',
+            data.pendingRequests || '0'
+        ];
         el.textContent = stats[i];
     });
     
-    const courseGrid = document.querySelector('.course-grid');
+    const coursesSection = document.querySelector('.courses-section');
+    const emptyState = coursesSection.querySelector('.empty-state');
+    const courseGrid = coursesSection.querySelector('.course-grid');
+    
+    courseGrid.innerHTML = '';
+    
     if (data.courses?.length) {
-        courseGrid.innerHTML = data.courses.map(course => `
-            <div class="course-card">
+        emptyState.style.display = 'none';
+        courseGrid.style.display = 'grid';
+        
+        data.courses.forEach(course => {
+            const courseCard = document.createElement('div');
+            courseCard.className = 'course-card';
+            courseCard.innerHTML = `
                 <div class="course-header">
                     <h3>${course.CourseCode}</h3>
-                    <span class="course-badge">Active</span>
+                    <span class="course-badge">${course.Status || 'Active'}</span>
                 </div>
-                <p class="course-title">${course.CourseTitle}</p>
+                <p class="course-title">${course.CourseName || course.CourseTitle}</p>
                 <div class="course-meta">
                     <span><i class="fas fa-users"></i> ${course.StudentCount || 0} Students</span>
-                    <span><i class="fas fa-clock"></i> Section ${course.SectionNo}</span>
+                    <span><i class="fas fa-clock"></i> Section ${course.SecID}</span>
                 </div>
-            </div>
-        `).join('');
-        document.querySelector('.empty-state').style.display = 'none';
+                <div class="course-actions">
+                    <a href="#" class="btn btn-sm btn-primary"><i class="fas fa-list"></i> Roster</a>
+                    <a href="#" class="btn btn-sm btn-secondary"><i class="fas fa-chart-bar"></i> Analytics</a>
+                </div>
+            `;
+            courseGrid.appendChild(courseCard);
+        });
     } else {
-        document.querySelector('.empty-state').style.display = 'block';
+        emptyState.style.display = 'block';
+        courseGrid.style.display = 'none';
     }
 }
 
