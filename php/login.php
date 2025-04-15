@@ -40,7 +40,7 @@ try {
                 'message' => $result['message'],
                 'redirect' => ($result['user']['RoleName'] === "Student") 
                     ? '../html/dashboard.html' 
-                    : '../html/teacher-dashboard.html',
+                    : '../html/teacher_dashboard.html',
                 'userData' => [
                     'id' => $result['user']['PersonID'],
                     'name' => $result['user']['Username'],
